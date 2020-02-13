@@ -136,21 +136,20 @@ def mine():
     data = request.get_json()
     # Run the proof of work algorithm to get the next proof
     proof = data['proof']
-    index = data['index']
     # Forge the new Block by adding it to the chain with the proof
-    if proof and index:
+    if proof and id:
         previous_hash = blockchain.hash(blockchain.last_block)
         new_block = blockchain.new_block(proof, previous_hash)
 
         response = {
             # TODO: Send a JSON response with the new block
-            "block": new_block
+            "message": "New Block Forged"
         }
         return jsonify(response), 200
 
     else:
         response = {
-            "message": 'Error: Proof or index not present'
+            "message": 'Error: Proof or id not present'
         }
 
         return jsonify(response), 400
@@ -170,6 +169,7 @@ def last_block():
     response = {
         "last_block": blockchain.last_block
     }
+    return jsonify(response), 200
 
 
 # Run the program on port 5000
