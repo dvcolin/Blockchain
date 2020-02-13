@@ -116,7 +116,7 @@ class Blockchain(object):
 
         guess_hash = hashlib.sha256(guess).hexdigest()
 
-        return guess_hash[:3] == '000'
+        return guess_hash[:6] == '000000'
 
 
 # Instantiate our Node
