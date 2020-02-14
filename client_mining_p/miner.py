@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
         print('Started getting new proof!')
         new_proof = proof_of_work(last_block)
-        print('Got new proof!')
+        print(f"Got new proof! {new_proof}")
 
         # When found, POST it to the server {"proof": new_proof, "id": id}
         post_data = {"proof": new_proof, "id": id}

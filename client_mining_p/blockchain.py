@@ -136,8 +136,11 @@ def mine():
     data = request.get_json()
     # Run the proof of work algorithm to get the next proof
     proof = data['proof']
+
+    last_block = blockchain.last_block
+    last_block_string = json.dumps(last_block, sort_keys=True)
     # Forge the new Block by adding it to the chain with the proof
-    if proof and id:
+    if blockchain.valid_proof(last_block_string, proof):
         previous_hash = blockchain.hash(blockchain.last_block)
         new_block = blockchain.new_block(proof, previous_hash)
 
@@ -149,10 +152,10 @@ def mine():
 
     else:
         response = {
-            "message": 'Error: Proof or id not present'
+            "message": 'Error: Bad proof'
         }
 
-        return jsonify(response), 400
+        return jsonify(response), 200
 
 
 @app.route('/chain', methods=['GET'])
